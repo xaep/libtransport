@@ -25,7 +25,7 @@ launch "Visual Studio 2010 command prompt" or
 
 	bootstrap.bat
 	b2.exe --without-mpi --without-python
-	b2.exe --without-mpi --without-python install --prefix=C:\env-msvc-x64 --layout=system
+	b2.exe --without-mpi --without-python install --prefix=C:\env-msvc-x64 --layout=system --variant=release --link=static --threading=multi --runtime-linking=static --toolset=msvc release
 
 2. clone swift repository and build it. Don't forget to point it to our env directory:
 
