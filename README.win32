@@ -33,8 +33,8 @@ launch "Visual Studio 2010 command prompt" or
 	cd swift
 	echo boost_includedir="c:/env-msvc-x64/include" > config.py
 	echo boost_libdir="c:/env-msvc-x64/lib" >> config.py 
-	scons.bat debug=no SWIFTEN_INSTALLDIR=C:\env-msvc-x64
-	scons.bat debug=no SWIFTEN_INSTALLDIR=C:\env-msvc-x64 C:\env-msvc-x64
+	scons.bat debug=no SWIFTEN_INSTALLDIR=C:\env-msvc-x64 build_examples=no
+	scons.bat debug=no SWIFTEN_INSTALLDIR=C:\env-msvc-x64 build_examples=no C:\env-msvc-x64
 
 TODO: fix in upstream
 You may need manually copy compiled 3rdParty libs to C:\env-msvc-x64\lib\3rdParty\Expat, 
