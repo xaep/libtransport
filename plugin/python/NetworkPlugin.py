@@ -19,6 +19,12 @@ class NetworkPlugin:
 		self.m_data = ""
 		self.m_init_res = 0
 
+        def sendConfig(self, config):
+                m = protocol_pb2.BackendConfig()
+                m.config = config
+                message = WRAP(m.SerializeToString(), protocol_pb2.WrapperMessage.TYPE_BACKEND_CONFIG)
+                self.send(message)
+
 	def handleMessage(self, user, legacyName, msg, nickname = "", xhtml = ""):
 		m = protocol_pb2.ConversationMessage()
 		m.userName = user
@@ -144,6 +150,14 @@ class NetworkPlugin:
 		self.send(message);
 
 
+        def handleRoomList(self, user, rooms):
+                d = protocol_pb2.RoomList()
+                for r in rooms:
+                        d.room.append(r['id'])
+                        d.name.append(r['name'])
+                message = WRAP(d.SerializeToString(), protocol_pb2.WrapperMessage.TYPE_ROOM_LIST)
+                self.send(message)        
+                
 	def handleRoomNicknameChanged(self, user, r, nickname):
 		room = protocol_pb2.Room()
 		room.userName = user
@@ -200,9 +214,9 @@ class NetworkPlugin:
 		if (payload.ParseFromString(data) == False):
 			#TODO: ERROR
 			return
-		self.handleLogoutRequest(self, payload.user, payload.legacyName)
+		self.handleLogoutRequest(payload.user, payload.legacyName)
 	
-	def handleStatusChangedPayload(data):
+	def handleStatusChangedPayload(self, data):
 		payload = protocol_pb2.Status()
 		if (payload.ParseFromString(data) == False):
 			#TODO: ERROR
